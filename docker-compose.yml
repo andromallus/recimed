@@ -1,18 +1,13 @@
 version: '3'
 services:
-    db:
-        build:
-            context: .
-            dockerfile: docker/mysql/Dockerfile
-        environment: 
-            MYSQL_DATABASE: ${MYSQL_DATABASE}
-            MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
-        command: --default-authentication-plugin=mysql_native_password
-        restart: unless-stopped
-        volumes:
-            - ./db_data:/usr/data
+    recimed_mysql_db:
+        image: mysql:latest
+        container_name: mysql_db_rec
+        deploy:
+        environment:
+        - MYSQL_ROOT_PASSWORD=root
         ports:
-            - 3306:3306
+        - 33060:3306
     web:
         build:
             context: .
@@ -29,14 +24,21 @@ services:
         ports:
             - 80:80
         depends_on: 
-            - db
+            - recimed_mysql_db
         links:
-            - db
+            - recimed_mysql_db
     adminer:
         image: adminer
         restart: unless-stopped
         ports:
             - 8080:8080
+    phpmyadmin:
+        image: phpmyadmin:latest
+        restart: always
+        ports:
+            - 9001:80
+        environment:
+            - PMA_ARBITRARY=1        
 volumes:
     db_data:
     src:

@@ -16,6 +16,11 @@ RUN apt-get install -y \
     libfreetype6-dev \
     g++
 
+RUN apt-get update && apt-get install -y \
+    imagemagick libmagickwand-dev --no-install-recommends \
+    && pecl install imagick \
+    && docker-php-ext-enable imagick
+
 RUN docker-php-ext-install \
     bz2 \
     intl \
