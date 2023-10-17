@@ -9,6 +9,13 @@ const loginForDoc = document.getElementById('test');
 //     console.log("miiiamsidas");
 // });
 
+document.getElementById("surtir").addEventListener("click", () => {
+    //outputText.innerHTML = ""; // Clear the text
+    //typeText(0); // Start typing animation
+
+    alert("");
+});
+
 
 function mostrarDocLogin() {
     var doc_inicio = document.getElementById("doc_inicio");
@@ -69,16 +76,16 @@ function regresarDoctor() {
 
 
 function ingresarDoctorT() {
-    //window.location.href = "http://localhost/admin"
+    window.location.href = "http://localhost/admin"
 
-    var first_message = document.getElementById("first_message");
-    var doc_login = document.getElementById("doc_login");
-    window.setTimeout(
-        function removethis() {
-            first_message.style.display = 'block';
-            doc_login.style.display = 'none';
+    // var first_message = document.getElementById("first_message");
+    // var doc_login = document.getElementById("doc_login");
+    // window.setTimeout(
+    //     function removethis() {
+    //         first_message.style.display = 'block';
+    //         doc_login.style.display = 'none';
 
-        }, 300);
+    //     }, 300);
 }
 
 const textToType = "Hola, Buenos dias Yahir, en que puedo ayudarte hoy?";
@@ -98,6 +105,16 @@ document.getElementById("ingresarDoctor").addEventListener("click", () => {
     window.location = "http://localhost/admin"
 });
 
+document.getElementById("ingresarFarmacia").addEventListener("click", () => {
+    //outputText.innerHTML = ""; // Clear the text
+    //typeText(0); // Start typing animation
+
+    window.location = "http://localhost/farmacia"
+});
+
+function ingresarFarmacia(){
+    window.location = "http://localhost/farmacia" 
+}
 
 
 function regresarAInicio() {
@@ -133,6 +150,98 @@ function listapaciente() {
         }, 300);
 }
 
+
+function nuevoPaciente() {
+    var inicio = document.getElementById("contenido");
+    var formaPaciente = document.getElementById("formaPaciente");
+
+    inicio.style.opacity = '0';
+    window.setTimeout(
+        function removethis() {
+            inicio.style.display = 'none';
+            formaPaciente.style.display = 'block';
+
+        }, 300);
+}
+
+function guardarNuevoPaciente() {
+
+
+    var gifs = document.getElementById("gifs");
+    var formaPaciente = document.getElementById("formaPaciente");
+
+
+    var nombreforma = document.getElementById("nombreforma").value;
+    var primerapforma = document.getElementById("primerapforma").value;
+    var segundoapforma = document.getElementById("segundoapforma").value;
+    var curp = document.getElementById("curp").value;
+    var edad = document.getElementById("edad").value;
+    var fecha_nacimiento = document.getElementById("fecha_nacimiento").value;
+    var genero = document.getElementById("genero").value;
+
+    let formData = new FormData();
+    formData.append('nombreforma', nombreforma);
+    formData.append('primerapforma', primerapforma);
+    formData.append('segundoapforma', segundoapforma);
+    formData.append('curp', curp);
+    formData.append('edad', edad);
+    formData.append('fecha_nacimiento', fecha_nacimiento);
+    formData.append('genero', genero);
+
+
+
+    var spinner = document.getElementById("spinner");
+    var pbutton = document.getElementById("pbutton");
+
+    var volver = document.getElementById("volver");
+
+
+
+    pbutton.style.opacity = '0';
+    window.setTimeout(
+        function removethis() {
+            pbutton.style.display = 'none';
+            spinner.style.display = 'block';
+
+        }, 300);
+
+    //formData.append('password', 'John123');
+
+    fetch('/SearchController/guardarPaciente', {
+        method: 'POST',
+        body: formData,
+    })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+        })
+        .then(data => {
+            console.log(data);
+
+
+            formaPaciente.style.opacity = '0';
+            window.setTimeout(
+                function removethis() {
+                    formaPaciente.style.display = 'none';
+                    gifs.style.display = 'block';
+                    volver.style.display = 'block';
+
+
+                }, 300);
+
+
+            // Handle the response from the controller
+        })
+        .catch(error => {
+            console.error('Fetch error:', error);
+        });
+
+
+
+
+}
 
 
 
@@ -496,7 +605,7 @@ function generarReceta(event) {
             return response.json();
         })
         .then(data => {
- 
+
 
 
             // Add content to the cells (you can change this content)
@@ -504,23 +613,23 @@ function generarReceta(event) {
             var paragraph = document.getElementById("paciente");
 
             // Add text to the paragraph
-            paragraph.innerHTML = data[0]['nombre'] + ' ' + data[0]['primer_apellido'] + ' ' + data[0]['segundo_apellido'] ;
+            paragraph.innerHTML = data[0]['nombre'] + ' ' + data[0]['primer_apellido'] + ' ' + data[0]['segundo_apellido'];
 
             var paragraph = document.getElementById("edadpaciente");
 
             // Add text to the paragraph
-            paragraph.innerHTML = data[0]['edad'] ;
+            paragraph.innerHTML = data[0]['edad'];
 
 
             var paragraph = document.getElementById("idpaciente");
 
             // Add text to the paragraph
-            paragraph.innerHTML = data[0]['id'] ;
+            paragraph.innerHTML = data[0]['id'];
 
 
 
-            
-          
+
+
 
         })
         .catch(error => {
@@ -683,7 +792,7 @@ function generarRecetaPDF() {
 
             console.log(data);
 
-            window.location = "http://localhost/generatePDF"
+            window.open('http://localhost/generatePDF', '_blank');
 
 
         })
@@ -694,6 +803,168 @@ function generarRecetaPDF() {
 
 
 
+}
+function mostrarReceta() {
+
+    fetch('/mostrarReceta', {
+        method: 'POST',
+
+    })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+        })
+        .then(data => {
+            console.log(data);
+
+            data = data[0];
+            var contenedor = document.getElementById("divreceta"); // Reemplaza "contenedor" con el ID de tu contenedor
+
+            // Crear un div
+            var div = document.createElement("div");
+
+            // Recorrer los datos y agregarlos al div
+            for (var key in data) {
+                if (data.hasOwnProperty(key)) {
+                    var p = document.createElement("p");
+                    p.textContent =  data[key];
+                    div.appendChild(p);
+                }
+            }
+
+            // Estilizar el div (opcional)
+            div.style.border = "1px solid #ccc";
+            div.style.padding = "10px";
+            div.style.margin = "10px";
+
+
+            // Agregar el div al contenedor
+            contenedor.appendChild(div);
+
+
+
+
+        })
+        .catch(error => {
+            console.error('Fetch error:', error);
+        });
+
+
+
+        fetch('/mostrarRecetaMedicamentos', {
+            method: 'POST',
+    
+        })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+            .then(data => {
+                console.log(data);
+
+                var table = document.getElementById("data-table").getElementsByTagName('tbody')[0];
+
+                for (var i = 0; i < data.length; i++) {
+                    var row = table.insertRow(i);
+                    var cell1 = row.insertCell(0);
+                    var cell2 = row.insertCell(1);
+                    var cell3 = row.insertCell(2);
+                    var cell4 = row.insertCell(3);
+                    var cell5 = row.insertCell(4);
+                    var cell6 = row.insertCell(5);
+            
+                    cell1.innerHTML = data[i].id;
+                    cell2.innerHTML = data[i].nombre;
+                    cell3.innerHTML = data[i].tipo;
+                    cell4.innerHTML = data[i].dosis;
+                    cell5.innerHTML = data[i].id_receta;
+                }
+
+
+                var buttonRow = table.insertRow(data.length); // Create a new row
+                var buttonCell0 = buttonRow.insertCell(0); // Create a cell in the new row
+                var buttonCell1 = buttonRow.insertCell(0);
+                var buttonCell2 = buttonRow.insertCell(0);
+                var buttonCell3 = buttonRow.insertCell(0);
+                var buttonCell4 = buttonRow.insertCell(0);
+                var buttonCell5 = buttonRow.insertCell(0);
+
+            // Create a less rounded button using JavaScript
+                var button = document.createElement("button");
+                button.textContent = "Surtir"; // Button text
+                button.style.borderRadius = "10px"; // Less rounded corners
+                button.style.padding = "10px 20px"; // Padding for the button
+                button.style.backgroundColor = "#0079bb"; // Background color
+                button.style.color = "#fff"; // Text color
+                button.style.border = "none"; // Remove button border
+                button.style.cursor = "pointer";
+                button.id = "surtir"; // Change cursor on hover
+                document.body.appendChild(button); // Add the button to the body or any other container
+
+
+                button.onclick = function() {
+                    // Your click event handler code here
+                    window.open('http://localhost/generatePDFS', '_blank');
+
+                };
+
+
+                buttonCell3.appendChild(button);
+                // data = data[0];
+                // var contenedor = document.getElementById("divreceta"); // Reemplaza "contenedor" con el ID de tu contenedor
+    
+                // // Crear un div
+                // var div = document.createElement("div");
+    
+                // // Recorrer los datos y agregarlos al div
+                // for (var key in data) {
+                //     if (data.hasOwnProperty(key)) {
+                //         var p = document.createElement("p");
+                //         p.textContent = key + ": " + data[key];
+                //         div.appendChild(p);
+                //     }
+                // }
+    
+                // // Estilizar el div (opcional)
+                // div.style.border = "1px solid #ccc";
+                // div.style.padding = "10px";
+                // div.style.margin = "10px";
+    
+                // // Agregar el div al contenedor
+                // contenedor.appendChild(div);
+    
+    
+    
+    
+            })
+            .catch(error => {
+                console.error('Fetch error:', error);
+            });  
+
+
+            var a = document.getElementById("data-table");
+            var b = document.getElementById("divreceta");
+            var c = document.getElementById("volverFarmacia");
+            var d = document.getElementById("contenido");
+
+
+
+            
+        
+            d.style.opacity = '0';
+            window.setTimeout(
+                function removethis() {
+                    d.style.display = 'none';
+                    a.style.display = 'table';
+                    b.style.display = 'block';
+                    c.style.display = 'block';
+
+        
+                }, 300);
 }
 
 function addMedicamento(event) {

@@ -89,7 +89,7 @@
                         class="btn btn-link"
                         style="color: red"
                       >
-                        Crea una nueva
+                        Contacta al administrador
                       </button>
                     </div>
 
@@ -128,10 +128,10 @@
                       />
                     </div>
 
-                    <button
+                    <button onclick="ingresarFarmacia()"
                       class="btn btn-primary btn-block fa-lg blue mb-3"
                       style="background-color: #0079bb"
-                      type="button"
+                      type="button" 
                     >
                       Ingresar
                     </button>
@@ -145,7 +145,7 @@
                         class="btn btn-link"
                         style="color: red"
                       >
-                        Crea una nueva
+                        Contacta al administrador
                       </button>
                     </div>
 

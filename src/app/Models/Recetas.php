@@ -36,6 +36,19 @@ class Recetas extends Model
     }
 
 
+    function ultimaB()
+    {
+
+        $recetas = $this->db->query("select CONCAT(p.nombre,' ',p.primer_apellido,' ',p.segundo_apellido),CONCAT('Edad: ',p.edad),curp,rf.diagnostico,rf.medico_prescriptor,rf.numero_receta
+        FROM RecetasFarmacia rf 
+        inner join pacientes p on p.id = rf.id_paciente
+        where rf.id = (  select id from RecetasFarmacia order by id desc limit 1)");
+        return $recetas->getResult();
+
+
+    }
+
+
     function insertar($idpaciente,$diagnostico)
     {
 

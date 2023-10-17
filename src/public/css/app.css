@@ -53318,3 +53318,38 @@ tr:hover {
   border: 1px solid #ccc; /* Optional border for the div */
   margin: 20px; /* Optional margin */
 }
+
+.loading-spinner {
+  border: 4px solid rgba(0, 0, 0, 0.1);
+  border-top: 4px solid #3498db;
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  animation: spin 1s linear infinite;
+}
+
+.checkmark-container {
+  text-align: center;
+}
+
+.checkmark {
+  display: inline-block;
+  position: relative;
+  width: 80px; /* Adjust the width and height for the larger checkmark */
+  height: 80px;
+  border-radius: 50%;
+  background: #fff;
+  border: 4px solid #0079bb; /* Color for the circle and checkmark */
+}
+
+.checkmark:after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 35%; /* Adjust the left position to center the checkmark */
+  width: 20px; /* Adjust the width for the larger checkmark */
+  height: 40px; /* Adjust the height for the larger checkmark */
+  border: 4px solid #0079bb; /* Color for the checkmark */
+  transform: translate(-50%, -50%) rotate(45deg);
+}
+

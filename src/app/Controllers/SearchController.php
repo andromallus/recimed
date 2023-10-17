@@ -97,6 +97,23 @@ class SearchController extends BaseController
     }
 
 
+    public function guardarPaciente()
+    {
+
+        $nombreforma = $this->request->getPost('nombreforma');
+        $primerapforma = $this->request->getPost('primerapforma');
+        $segundoapforma = $this->request->getPost('segundoapforma');
+        $curp = $this->request->getPost('curp');
+        $edad = $this->request->getPost('edad');
+        $fecha_nacimiento = $this->request->getPost('fecha_nacimiento');
+        $genero = $this->request->getPost('genero');
+        
+        $pacientes = new Pacientes();
+        $datos = $pacientes->guardarPaciente($nombreforma,$primerapforma,$segundoapforma,$curp ,$edad,$fecha_nacimiento,$genero);
+        return json_encode($datos);
+    }
+
+
 
     
 }

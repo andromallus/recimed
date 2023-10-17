@@ -34,4 +34,19 @@ class Pacientes extends Model
 
 
     }
+
+    function guardarPaciente($nombreforma,$primerapforma,$segundoapforma,$curp ,$edad,$fecha_nacimiento,$genero){
+
+
+    $insert = "INSERT INTO pacientes (nombre, primer_apellido, segundo_apellido,curp,edad, fecha_nacimiento,genero)
+    VALUES ('".$nombreforma."','".$primerapforma."','".$segundoapforma."','".$curp."',".$edad.",'".$fecha_nacimiento."','".$genero."')";
+
+
+     $this->db->query($insert);
+
+
+    }
+
+
+
 }
