@@ -11,7 +11,7 @@
     <div class="centered-div" style="margin-top: -50px; position: relative">
       <div class="logo-container">
         <img
-          src="<?php echo base_url();?>/img/ene2.svg"
+          src="<?php echo base_url();?>/img/logofinal.svg"
           class="logo-image"
           alt="Company Logo"
         />
